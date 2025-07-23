@@ -1,0 +1,26 @@
+a {
+  color: white;
+}
+
+/* Header Styling */
+header {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+header h2 {
+  margin: 10px 0;
+  font-size: xx-large;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  header h2 {
+    font-size: 18px;
+  }
+}

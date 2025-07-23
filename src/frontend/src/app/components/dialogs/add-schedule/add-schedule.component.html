@@ -1,0 +1,79 @@
+<h2 mat-dialog-title>
+  <b>{{ "new-dialog.title" | transloco }}</b>
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="d-flex flex-column">
+    <mat-form-field>
+      <mat-label>{{ "new-dialog.employee-label" | transloco }}</mat-label>
+      <mat-select formControlName="employee">
+        @for (employee of data.employees; track employee) {
+        <mat-option [value]="employee.id">{{ employee.userName }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ "reservation.start-time" | transloco }}</mat-label>
+      <mat-datetimepicker-toggle
+        [for]="startDatetimePicker"
+        matSuffix
+      ></mat-datetimepicker-toggle>
+      <mat-datetimepicker
+        #startDatetimePicker
+        type="datetime"
+        [openOnFocus]="true"
+        [timeInterval]="5"
+        mode="portrait"
+      ></mat-datetimepicker>
+      <input
+        matInput
+        formControlName="from"
+        [matDatetimepicker]="startDatetimePicker"
+        readonly
+        [min]="data.minTime"
+        [max]="data.maxTime"
+        autocomplete="false"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>{{ "reservation.end-time" | transloco }}</mat-label>
+      <mat-datetimepicker-toggle
+        [for]="endDatetimePicker"
+        matSuffix
+      ></mat-datetimepicker-toggle>
+      <mat-datetimepicker
+        #endDatetimePicker
+        type="datetime"
+        [openOnFocus]="true"
+        [timeInterval]="5"
+        mode="portrait"
+      ></mat-datetimepicker>
+      <input
+        matInput
+        formControlName="to"
+        [matDatetimepicker]="endDatetimePicker"
+        [min]="form.value.from"
+        [max]="data.maxTime"
+        readonly
+        autocomplete="false"
+      />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">
+    {{ "new-dialog.cancel" | transloco }}
+  </button>
+  <button
+    mat-button
+    color="primary"
+    [mat-dialog-close]="{
+      employeeId: this.form.value.employee,
+      from: this.form.value.from,
+      to: this.form.value.to,
+    }"
+    cdkFocusInitial
+    [disabled]="!form.valid"
+  >
+    {{ "new-dialog.create" | transloco }}
+  </button>
+</mat-dialog-actions>

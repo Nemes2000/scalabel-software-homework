@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>
+  <b>{{ "create-employee.title" | transloco }}</b>
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="d-flex flex-column">
+    <mat-form-field>
+      <mat-label>{{ "create-employee.name-label" | transloco }}</mat-label>
+      <input matInput formControlName="userName" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ "create-employee.email-label" | transloco }}</mat-label>
+      <input matInput formControlName="email" type="email" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ "create-employee.phone-label" | transloco }}</mat-label>
+      <input matInput formControlName="phoneNumber" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ "create-employee.role-label" | transloco }}</mat-label>
+      <mat-select formControlName="role">
+        @for (role of roles; track role) {
+        <mat-option [value]="role">{{
+          "employee.role." + role | transloco
+        }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{
+        "create-employee.hourly-wage-label" | transloco
+      }}</mat-label>
+      <input matInput formControlName="hourlyWage" type="number" min="0" />
+    </mat-form-field>
+  </form>
+  <mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">
+      {{ "create-employee.cancel" | transloco }}
+    </button>
+    <button
+      mat-button
+      color="primary"
+      [mat-dialog-close]="{
+      userName: form.value.userName,
+      role: form.value.role,
+      hourlyWage: form.value.hourlyWage,
+      email: form.value.email,
+      phoneNumber: form.value.phoneNumber,
+    }"
+      cdkFocusInitial
+      [disabled]="form.invalid"
+    >
+      {{ "create-employee.create" | transloco }}
+    </button>
+  </mat-dialog-actions>
+</mat-dialog-content>

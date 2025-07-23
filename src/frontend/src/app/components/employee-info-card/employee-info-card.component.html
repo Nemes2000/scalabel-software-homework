@@ -1,0 +1,53 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <div class="employee-name mx-2">{{ employee.userName }}</div>
+    <div class="employee-name mx-2">
+      {{ "employee.role." + employee.role | transloco }}
+    </div>
+  </mat-expansion-panel-header>
+  <mat-divider></mat-divider>
+  <div class="employee-input-row">
+    <p class="employee-wage-label">{{ "employee.email" | transloco }}:</p>
+    <p class="employee-wage-label">{{ employee.email }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="employee-input-row">
+    <p class="employee-wage-label">{{ "employee.phone" | transloco }}:</p>
+    <p class="employee-wage-label">{{ employee.phoneNumber }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="employee-input-row">
+    <p class="employee-wage-label">{{ "employee.hour-wage" | transloco }}:</p>
+    <div class="input-container">
+      <input
+        matInput
+        type="number"
+        style="border: none"
+        class="wage-input mx-2"
+        [formControl]="wageFormControl"
+        [errorStateMatcher]="matcher"
+      />
+      <p class="employee-wage-label">
+        {{ "currency-hour" | transloco }}
+      </p>
+    </div>
+  </div>
+  <div class="employee-button-row">
+    <button mat-icon-button (click)="save()" class="ms-4">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-icon-button (click)="delete()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+  @if (wageFormControl.hasError('pattern') &&
+  !wageFormControl.hasError('required')) {
+  <mat-error style="color: red">{{
+    "employee.warn-min-price" | transloco
+  }}</mat-error>
+  } @if (wageFormControl.hasError('required')) {
+  <mat-error style="color: red">{{
+    "employee.warn-limit-empty" | transloco
+  }}</mat-error>
+  }
+</mat-expansion-panel>

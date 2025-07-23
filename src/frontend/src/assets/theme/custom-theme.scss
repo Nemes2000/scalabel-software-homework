@@ -1,0 +1,55 @@
+@use "@angular/material" as mat;
+@use "@dhutaryan/ngx-mat-timepicker" as mat-timepicker;
+@import '@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
+@include mat.core();
+@import "@angular/cdk/overlay-prebuilt.css";
+
+$app-theme-primary: mat.m2-define-palette(
+  mat.$m2-indigo-palette,
+  A400,
+  A100,
+  A700
+);
+$app-theme-accent: mat.m2-define-palette(mat.$m2-cyan-palette);
+$app-theme-warn: mat.m2-define-palette(mat.$m2-red-palette);
+$background-palette: (
+  background: #f0f0f0,
+  // Main app background
+  card: #ffffff,
+  // Card background color
+  dialog: #ffffff,
+  // Dialog background
+  hover: #e0e0e0,
+  // Hover background color
+  status-bar: #d0d0d0 // Custom color for status bar or header,,,,,,,
+);
+
+$custom-disabled: #08160f;
+
+$app-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $app-theme-primary,
+      accent: $app-theme-accent,
+      warn: $app-theme-warn,
+    ),
+    button: (
+      disabled: $custom-disabled,
+    ),
+    background: $background-palette // Apply the custom background,,,,,,,
+  )
+);
+
+.mat-button,
+.mat-raised-button,
+.mat-stroked-button,
+.mat-flat-button {
+  &:disabled {
+    background-color: $custom-disabled;
+    color: mat-color(disabled-button-text);
+  }
+}
+
+@include mat.all-component-themes($app-theme);
+@include mat-timepicker.timepicker-theme($app-theme);
+@include mat-datetimepicker-theme($app-theme);

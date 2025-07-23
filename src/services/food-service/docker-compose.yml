@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  food-service:
+    image: food-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: food-service
+    restart: always
+    networks:
+      - food-db-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5003
+    volumes:
+      - ./resources/:/app/resources/
+    depends_on:
+      - food-db-service
+    ports:
+      - 5003:5003
+
+  food-db-service:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: food-db
+    restart: always
+    environment:
+      SA_PASSWORD: "YourPassword1234"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+    networks:
+      - food-db-network
+    ports:
+      - 1433:1433
+
+networks:
+  food-db-network:
+    driver: bridge

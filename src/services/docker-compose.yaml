@@ -1,0 +1,104 @@
+version: "3"
+
+services:
+  user-service:
+    image: user-service
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: user-service
+    restart: always
+    networks:
+      - microservices
+      - user-db
+    environment:
+      - ASPNETCORE_URLS=http://+:5001;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VIRTUAL_HOST=_
+    depends_on:
+      - user-db-service
+    ports:
+      - 5001:5001
+
+  user-db-service:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: user-db
+    restart: always
+    environment:
+      SA_PASSWORD: "YourPassword1234"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+    networks:
+      - user-db
+
+  schedule-service:
+    image: schedule-service
+    build:
+      context: ./schedule-service/schedule-service
+      dockerfile: Dockerfile
+    container_name: schedule-service
+    restart: always
+    networks:
+      - microservices
+      - schedule-db
+    environment:
+      - ASPNETCORE_URLS=http://+:5005;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VIRTUAL_HOST=_
+    depends_on:
+      - user-service
+      - schedule-db-service
+    ports:
+      - 5005:5005
+
+  schedule-db-service:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: schedule-db
+    restart: always
+    environment:
+      SA_PASSWORD: "YourPassword1234"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+    networks:
+      - schedule-db
+
+  workday-service:
+    image: workday-service
+    build:
+      context: ./workday-service/workdayservice
+      dockerfile: Dockerfile
+    container_name: workday-service
+    restart: always
+    networks:
+      - microservices
+      - workday-db
+    environment:
+      - ASPNETCORE_URLS=http://+:5004;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VIRTUAL_HOST=_
+    depends_on:
+      - user-service
+      - workday-db-service
+    ports:
+      - 5004:5004
+
+  workday-db-service:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: workday-db
+    restart: always
+    environment:
+      SA_PASSWORD: "YourPassword1234"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+    networks:
+      - workday-db
+
+networks:
+  microservices:
+    driver: bridge
+  user-db:
+    driver: bridge
+  schedule-db:
+    driver: bridge
+  workday-db:
+    driver: bridge

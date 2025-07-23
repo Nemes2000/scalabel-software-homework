@@ -1,0 +1,43 @@
+html,
+body {
+  height: 100%;
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+footer {
+  height: 100px;
+}
+
+.mat-dialog-container {
+  border-radius: 60px !important;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 100% !important;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,206 @@
+version: "3"
+
+services:
+  frontend:
+    image: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: always
+    ports:
+      - 4200:80
+    networks:
+      - client-host
+
+  table-service:
+    image: table-service
+    build:
+      context: ./services/table-service
+      dockerfile: Dockerfile
+    container_name: table-service
+    restart: always
+    networks:
+      - microservices
+    environment:
+      - VIRTUAL_HOST=_
+
+  user-service:
+    image: user-service
+    build:
+      context: ./services/user-service
+      dockerfile: Dockerfile
+    container_name: user-service
+    restart: always
+    networks:
+      - microservices
+      - user-db
+    environment:
+      - ASPNETCORE_URLS=http://+:5001;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VIRTUAL_HOST=_
+    depends_on:
+      - user-db-service
+
+  user-db-service:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: user-db
+    restart: always
+    environment:
+      SA_PASSWORD: "YourPassword1234"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+    networks:
+      - user-db
+
+  stock-service:
+    image: stock-service
+    build:
+      context: ./services/stock-service
+      dockerfile: Dockerfile
+    container_name: stock-service
+    restart: always
+    networks:
+      - microservices
+      - stock-db
+    environment:
+      - ASPNETCORE_URLS=http://+:5002;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VIRTUAL_HOST=_
+    depends_on:
+      - stock-db-service
+
+  stock-db-service:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: stock-db
+    restart: always
+    environment:
+      SA_PASSWORD: "YourPassword1234"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+    networks:
+      - stock-db
+
+  food-service:
+    image: food-service
+    build:
+      context: ./services/food-service
+      dockerfile: Dockerfile
+    container_name: food-service
+    restart: always
+    networks:
+      - microservices
+      - food-db
+    environment:
+      - ASPNETCORE_URLS=http://+:5003;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VIRTUAL_HOST=_
+    volumes:
+      - ./services/food-service/resources/:/app/resources/
+    depends_on:
+      - food-db-service
+
+  food-db-service:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: food-db
+    restart: always
+    environment:
+      SA_PASSWORD: "YourPassword1234"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+    networks:
+      - food-db
+
+  workday-service:
+    image: workday-service
+    build:
+      context: ./services/workday-service/workdayservice
+      dockerfile: Dockerfile
+    container_name: workday-service
+    restart: always
+    networks:
+      - microservices
+      - workday-db
+    environment:
+      - ASPNETCORE_URLS=http://+:5004;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VIRTUAL_HOST=_
+    depends_on:
+      - user-service
+      - workday-db-service
+
+  workday-db-service:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: workday-db
+    restart: always
+    environment:
+      SA_PASSWORD: "YourPassword1234"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+    networks:
+      - workday-db
+
+  schedule-service:
+    image: schedule-service
+    build:
+      context: ./services/schedule-service/schedule-service
+      dockerfile: Dockerfile
+    container_name: schedule-service
+    restart: always
+    networks:
+      - microservices
+      - schedule-db
+    environment:
+      - ASPNETCORE_URLS=http://+:5005;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VIRTUAL_HOST=_
+    depends_on:
+      - user-service
+      - schedule-db-service
+
+  schedule-db-service:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: schedule-db
+    restart: always
+    environment:
+      SA_PASSWORD: "YourPassword1234"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+    networks:
+      - schedule-db
+
+  nginx-gw:
+    image: nginx-gw
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx-gw
+    restart: always
+    networks:
+      - microservices
+    ports:
+      - 2000:2000
+      - 2001:2001
+    depends_on:
+      - table-service
+      - user-service
+      - stock-service
+      - food-service
+      - workday-service
+      - schedule-service
+
+networks:
+  microservices:
+    driver: bridge
+  client-host:
+    driver: bridge
+  user-db:
+    driver: bridge
+  stock-db:
+    driver: bridge
+  food-db:
+    driver: bridge
+  schedule-db:
+    driver: bridge
+  workday-db:
+    driver: bridge

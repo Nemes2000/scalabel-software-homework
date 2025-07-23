@@ -1,0 +1,210 @@
+<h2>
+  <b>{{ "schedule.title" | transloco }}</b>
+</h2>
+<div class="schedule-container">
+  <div class="date-column-container">
+    <mat-card class="inline-calendar-card">
+      <mat-calendar
+        [selected]="selectedDate"
+        (selectedChange)="onDateChange($event)"
+      ></mat-calendar>
+    </mat-card>
+    <form [formGroup]="form">
+      <div class="time-container">
+        <mat-form-field class="w-145-px">
+          <mat-label>{{ "schedule.open-time-label" | transloco }}</mat-label>
+          <input
+            type="text"
+            matInput
+            readonly
+            formControlName="openingTime"
+            [matTimepicker]="openTimePicker"
+            (timeChange)="setMinClosingTime()"
+            [disabled]="!form.value.isOpen"
+            readonly
+          />
+          <mat-timepicker-toggle
+            matSuffix
+            [for]="openTimePicker"
+          ></mat-timepicker-toggle>
+          <mat-timepicker #openTimePicker></mat-timepicker>
+        </mat-form-field>
+        <mat-form-field class="w-145-px">
+          <mat-label>{{ "schedule.close-time-label" | transloco }}</mat-label>
+          <input
+            type="text"
+            matInput
+            readonly
+            [min]="minCloseTime"
+            formControlName="closingTime"
+            [matTimepicker]="closingTimePicker"
+            (timeChange)="checkForChanges()"
+            [disabled]="!form.value.isOpen"
+            readonly
+          />
+          <mat-timepicker-toggle
+            matSuffix
+            [for]="closingTimePicker"
+          ></mat-timepicker-toggle>
+          <mat-timepicker #closingTimePicker></mat-timepicker>
+        </mat-form-field>
+      </div>
+      <mat-form-field class="w-300-px">
+        <mat-label>{{ "schedule.closing-date-label" | transloco }}</mat-label>
+        <mat-select
+          formControlName="closingDay"
+          (selectionChange)="onSelectionChange()"
+          [disabled]="!form.value.isOpen"
+        >
+          @for (closingDate of closingDates; track closingDate) {
+          <mat-option [value]="closingDate.value">{{
+            closingDate.viewValue
+          }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-slide-toggle
+        (change)="workdayChange($event)"
+        formControlName="isOpen"
+        labelPosition="before"
+        class="mb-4"
+        >{{ "schedule.workday" | transloco }}</mat-slide-toggle
+      >
+      @if(isScheduleChanged && originalWorkday ){
+      <div class="save-changes-warn">
+        {{ "schedule.save-changes-warn" | transloco }}
+      </div>
+      }
+      <button
+        mat-flat-button
+        color="primary"
+        class="w-300-px mb-3"
+        (click)="saveScheduleDatas()"
+        [disabled]="!form.valid"
+      >
+        @if(originalWorkday){
+
+        {{ "schedule.save-dates" | transloco }}
+        } @else {
+        {{ "schedule.create-dates" | transloco }}
+        }
+      </button>
+      <div class="time-container mb-3">
+        <button
+          mat-flat-button
+          color="primary"
+          class="w-145-px h-80-px"
+          (click)="copyDay()"
+        >
+          {{ "schedule.copy-to-next-day" | transloco }}
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          class="w-145-px h-80-px"
+          (click)="copyWeek()"
+        >
+          {{ "schedule.copy-to-next-week" | transloco }}
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="workers-management-container">
+    @if(originalWorkday && originalWorkday.isOpen){
+    <button mat-flat-button (click)="addNewSchedule()" color="primary">
+      {{ "schedule.add-worker" | transloco }}
+    </button>
+    @if(!(isEnoughChefWarn$ | async)){
+    <div class="save-changes-warn w-100 h-10">
+      {{ "schedule.not-enough-chef" | transloco }}
+    </div>
+    }@if(!(isEnoughWaiterWarn$ | async)){
+    <div class="save-changes-warn w-100 h-10">
+      {{ "schedule.not-enough-waiter" | transloco }}
+    </div>
+    }
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+      <mat-tab label="{{ 'schedule.waiter-title' | transloco }}">
+        @for(waiter of waiters$ | async; track waiter) {
+        <div>
+          <mat-card class="mb-2">
+            <mat-card-content class="d-flex justify-content-between">
+              <p class="w-145-px">
+                {{ waiter.employee.userName }}
+              </p>
+              <div class="d-flex justify-contetn-between flex-column">
+                <div class="d-flex justify-content-between w-200-px">
+                  <p>{{ "schedule.work-start" | transloco }}:</p>
+                  <p>
+                    {{ waiter.schedule.from.split("T")[0] + " " }}
+                    {{ waiter.schedule.from.split("T")[1].slice(0, 5) }}
+                  </p>
+                </div>
+                <div class="d-flex justify-content-between w-200-px">
+                  <p>{{ "schedule.work-end" | transloco }}:</p>
+                  <p>
+                    {{ waiter.schedule.from.split("T")[0] + " " }}
+                    {{ waiter.schedule.to.split("T")[1].slice(0, 5) }}
+                  </p>
+                </div>
+              </div>
+              <div class="d-flex justify-contetn-between align-items-center">
+                <div class="d-flex justify-content-between w-120-px">
+                  <button mat-icon-button (click)="deleteSchedule(waiter)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        }
+      </mat-tab>
+      <mat-tab label="{{ 'schedule.chef-title' | transloco }}">
+        @for(chef of chefs$ | async; track chef) {
+        <div>
+          <mat-card class="mb-2">
+            <mat-card-content class="d-flex justify-content-between">
+              <p>
+                {{ chef.employee.userName }}
+              </p>
+              <div class="d-flex justify-contetn-between flex-column">
+                <div class="d-flex justify-content-between w-200-px">
+                  <p>{{ "schedule.work-start" | transloco }}:</p>
+                  <p>
+                    {{ chef.schedule.from.split("T")[0] + " " }}
+                    {{ chef.schedule.from.split("T")[1].slice(0, 5) }}
+                  </p>
+                </div>
+                <div class="d-flex justify-content-between w-200-px">
+                  <p>{{ "schedule.work-end" | transloco }}:</p>
+                  <p>
+                    {{ chef.schedule.to.split("T")[0] + " " }}
+                    {{ chef.schedule.to.split("T")[1].slice(0, 5) }}
+                  </p>
+                </div>
+              </div>
+              <div class="d-flex justify-contetn-between align-items-center">
+                <div class="d-flex justify-content-between w-120-px">
+                  <button mat-icon-button (click)="deleteSchedule(chef)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        }
+      </mat-tab>
+    </mat-tab-group>
+    } @if(originalWorkday && !originalWorkday.isOpen) {
+    <div class="no-available-schedule">
+      {{ "schedule.restaurant-is-closed" | transloco }}
+    </div>
+    } @if(!originalWorkday) {
+    <div class="no-available-schedule">
+      {{ "schedule.no-available-schedule" | transloco }}
+    </div>
+    }
+  </div>
+</div>

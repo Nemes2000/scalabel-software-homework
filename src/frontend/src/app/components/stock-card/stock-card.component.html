@@ -1,0 +1,38 @@
+<div class="resource-container px-3">
+  <div>
+    <div class="resource-name mx-2">{{ stockResource.name }}</div>
+    <div class="input-container">
+      <button mat-icon-button (click)="decreaseAmount()">
+        <mat-icon>remove</mat-icon>
+      </button>
+      <input
+        matInput
+        type="number"
+        style="border: none"
+        class="amount-input"
+        [formControl]="resourceFormControl"
+        [errorStateMatcher]="matcher"
+      />
+      <p class="resource-unit-label">
+        ({{ "stock.unit-label." + stockResource.unit | transloco }})
+      </p>
+      <button mat-icon-button (click)="increaseAmount()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-icon-button (click)="save()" class="ms-4">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-icon-button (click)="delete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+  @if (resourceFormControl.hasError('pattern') &&
+  !resourceFormControl.hasError('required')) {
+  <mat-error style="color: red">{{
+    "stock.warn-pattern" | transloco
+  }}</mat-error>
+  } @if (resourceFormControl.hasError('required')) {
+  <mat-error style="color: red">{{ "stock.warn-empty" | transloco }}</mat-error>
+  }
+</div>

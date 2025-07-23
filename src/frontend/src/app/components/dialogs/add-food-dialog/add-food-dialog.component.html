@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>
+  <b>{{ "new-dialog.title" | transloco }}</b>
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="d-flex flex-column">
+    <mat-form-field>
+      <mat-label>{{ "food.name-label" | transloco }}</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+    <mat-form-field class="mt-3">
+      <mat-label>{{ "food.category-label" | transloco }}</mat-label>
+      <mat-select formControlName="category">
+        @for (category of categories; track category) {
+        <mat-option [value]="category">{{
+          "food.category." + category | transloco
+        }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ "food.price-label" | transloco }}</mat-label>
+      <input matInput formControlName="price" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ "food.description-label" | transloco }}</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">
+    {{ "new-dialog.cancel" | transloco }}
+  </button>
+  <button
+    mat-button
+    color="primary"
+    [mat-dialog-close]="{
+      name: form.value.name,
+      description: form.value.description,
+      price: form.value.price,
+      category: form.value.category,
+    }"
+    cdkFocusInitial
+    [disabled]="form.invalid"
+  >
+    {{ "new-dialog.create" | transloco }}
+  </button>
+</mat-dialog-actions>

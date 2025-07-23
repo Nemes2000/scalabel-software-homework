@@ -1,0 +1,42 @@
+.resource-container {
+  background-color: bisque;
+  border-radius: 6px;
+}
+
+.resource-container div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.resource-name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.amount-input {
+  margin-top: 4px;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+}
+
+mat-error {
+  text-align: center;
+  width: 100%;
+}
+
+.resource-unit-label {
+  margin-top: 20px;
+  width: 30px;
+}
+
+p {
+  margin-left: 8px;
+}

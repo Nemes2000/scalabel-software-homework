@@ -1,0 +1,155 @@
+{
+  "currency-hour": "Ft/Óra",
+  "currency": "Ft",
+  "hour": "Óra",
+  "header": {
+    "title": "Menedzsment alkalmazás"
+  },
+  "navigation": {
+    "incoming-order": "Bejövő rendelések",
+    "table": "Asztalok kezelése",
+    "stock": "Készlet",
+    "employee": "Alkalmazottak",
+    "schedule": "Munkabeosztás és nyitvatartás",
+    "food": "Ételek",
+    "own-shedule": "Saját munkabeosztás"
+  },
+  "incoming-order": {
+    "title": "Bejövő rendelések",
+    "accept": "Elfogadás",
+    "decline": "Elutasítás",
+    "accepted": "Elfogadva",
+    "progress": "Készítés alatt",
+    "delivering": "Kiszállitás alatt",
+    "done": "Kész",
+    "declined": "Elutasitva",
+    "no-data": "Nincsen rendelés.",
+    "refresh": "Rendelések frissítése",
+    "email": "Email cím",
+    "address": "Kiszállítási cím",
+    "price": "Fizetendő összeg",
+    "inplace-address": "Helyben fogyasztja"
+  },
+  "stock": {
+    "title": "Készlet",
+    "search-place-holder": "Keressen rá egy termék nevére",
+    "add-new": "Új +",
+    "warn-empty": "Nem lehet üresen hagyni a mezőt!",
+    "warn-pattern": "Csak pozitív számot lehet megadni!",
+    "no-data": "Nincs ilyen termék a készletben.",
+    "search-label": "Termék megnevezése",
+    "unit-type": {
+      "Piece": "Darab",
+      "Kilogram": "Kilogramm",
+      "Liter": "Liter",
+      "Gram": "Gramm",
+      "Milliliter": "Milliliter"
+    },
+    "unit-label": {
+      "Piece": "db",
+      "Kilogram": "kg",
+      "Liter": "l",
+      "Gram": "gr",
+      "Milliliter": "ml"
+    }
+  },
+  "employee": {
+    "title": "Alkalmazottak",
+    "search-place-holder": "Keressen rá egy alkalmazott nevére",
+    "add-new": "Új +",
+    "warn-empty": "Nem lehet üresen hagyni a mezőt!",
+    "warn-pattern": "Csak pozitív számot lehet megadni!",
+    "no-data": "Nincs ilyen nevű alkalmazott.",
+    "search-label": "Alkalmazott neve",
+    "monthly-tip": "Havi borravaló",
+    "hour-wage": "Órabér",
+    "email": "Email cím",
+    "phone": "Telefonszám",
+    "role": {
+      "Waiter": "Pincér",
+      "Kitchen": "Szakács"
+    }
+  },
+  "new-dialog": {
+    "create": "Létrehozás",
+    "cancel": "Mégse",
+    "title": "Új elem felvétele",
+    "unit-label": "Mértékegység",
+    "name-label": "Új elem",
+    "table-label": "Asztal neve",
+    "seats-label": "Férőhely",
+    "min-price-label": "Minimum összeg",
+    "employee-label": "Alkalmazott",
+    "new-schedule-title": "Új beosztás felvétele"
+  },
+  "create-employee": {
+    "title": "Alkalmazott létrehozása",
+    "role-label": "Beosztás",
+    "name-label": "Alkalmazott neve",
+    "hourly-wage-label": "Órabér",
+    "create": "Felvétel",
+    "cancel": "Mégse",
+    "email-label": "Emailcím",
+    "phone-label": "Telefonszám"
+  },
+  "food": {
+    "title": "Ételek",
+    "search-place-holder": "Keressen rá egy étel nevére",
+    "add-new": "Új +",
+    "warn-empty": "Nem lehet üresen hagyni a mezőt!",
+    "warn-pattern": "Csak pozitív számot lehet megadni!",
+    "no-data": "Nincs ilyen étel az étteremben.",
+    "search-label": "Étel megnevezése",
+    "description-label": "Leírás",
+    "price-label": "Ár",
+    "image-label": "Kép",
+    "name-label": "Megnevezés",
+    "category-label": "Kategória",
+    "category": {
+      "Dessert": "Desszert",
+      "Main": "Főétel",
+      "Soup": "Leves",
+      "FastFood": "Gyorsétel",
+      "Beverage": "Ital"
+    }
+  },
+  "table": {
+    "seats": "Férőhely",
+    "title": "Asztalok kezelése",
+    "add-new": "Új +",
+    "search-label": "Férőhely",
+    "search-place-holder": "Keressen asztalokat férőhely szerint (számot adhat meg)",
+    "no-data": "Nincs ilyen asztal."
+  },
+  "schedule": {
+    "title": "Munkabeosztás és nyitvatartás kezelése",
+    "selected-date": "Kiválasztott nap",
+    "open-time-label": "Nyitás",
+    "close-time-label": "Zárás",
+    "closing-date-label": "Zárás dátuma",
+    "waiter-title": "Beosztott pincérek",
+    "chef-title": "Beosztott konyhások",
+    "copy-to-next-day": "Napi beosztás másolása",
+    "copy-to-next-week": "Heti beosztás másolása",
+    "closed-day": "Munkaszüneti nap",
+    "workday": "Munkanap",
+    "work-start": "Kezdés",
+    "work-end": "Végzés",
+    "save-dates": "Nyitvatartás mentése",
+    "close-time-error": "A zárás idejének későbbnek kell lennie mint a nyitás idejének!",
+    "add-worker": "Alkalmazott beosztása",
+    "save-changes-warn": "Mentse el a módosításokat!",
+    "no-available-schedule": "Nincs információ az adott napról.",
+    "create-dates": "Nyitvatartás létrehozása",
+    "not-enough-waiter": "Nincs minden időpontra beosztva pincér!",
+    "not-enough-chef": "Nincs minden időpontra beosztva szakács!",
+    "restaurant-is-closed": "Az étterem zárva tart ezen a napon"
+  },
+  "home": {
+    "workday": "Munkanap",
+    "from": "Mettől",
+    "to": "Meddig",
+    "workHours": "Munkaórák száma",
+    "no-data": "Nincs beosztva"
+  }
+}

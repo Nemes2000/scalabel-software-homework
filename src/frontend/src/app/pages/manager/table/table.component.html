@@ -1,0 +1,43 @@
+<h2>
+  <b>{{ "table.title" | transloco }}</b>
+</h2>
+<div class="table-container">
+  <div class="d-flex alig-items-center justify-content-between">
+    <p class="mt-2 me-2">{{ "table.search-label" | transloco }}:</p>
+    <mat-slider
+      min="0"
+      max="{{ maxSeatNumber }}"
+      [step]="1"
+      [discrete]="thumbLabel"
+      [showTickMarks]="showTicks"
+      showTickMarks
+      [discrete]="true"
+    >
+      <input [(ngModel)]="minFilter" matSliderStartThumb />
+      <input [(ngModel)]="maxFilter" matSliderEndThumb />
+    </mat-slider>
+    <button matSuffix mat-icon-button (click)="searchTable()">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-flat-button color="primary" (click)="createTable()">
+      {{ "table.add-new" | transloco }}
+    </button>
+  </div>
+  @for(table of filteredTables; track table) {
+  <div class="table-card mx-2">
+    <div class="ms-5">
+      {{ table.name }}
+    </div>
+    <div class="d-flex">
+      <div>{{ table.seats }} {{ "table.seats" | transloco }}</div>
+      <button mat-icon-button (click)="deleteTable(table.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+  } @empty {
+  <div style="font-size: medium">
+    <b>{{ "table.no-data" | transloco }}</b>
+  </div>
+  }
+</div>

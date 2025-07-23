@@ -1,0 +1,62 @@
+mat-expansion-panel {
+  border-radius: 6px;
+  background-color: bisque;
+}
+
+.employee-input-row {
+  min-width: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.employee-button-row {
+  display: flex;
+  justify-content: end;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.employee-name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.wage-input {
+  margin-top: 4px;
+  width: 80px;
+  height: 40px;
+  text-align: center;
+}
+
+mat-error {
+  text-align: center;
+  width: 100%;
+}
+
+.employee-wage-label {
+  margin-top: 20px;
+}
+
+::ng-deep mat-expansion-panel-header span {
+  display: flex;
+  justify-content: space-between;
+
+  div:nth-of-type(2) {
+    text-align: right;
+  }
+}
+
+mat-expansion-panel-header {
+  background-color: bisque;
+}
+
+.employee-name {
+  font-weight: bold;
+  margin-right: 10px;
+}

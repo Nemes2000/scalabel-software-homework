@@ -1,0 +1,38 @@
+<h2>
+  <b>{{ "stock.title" | transloco }}</b>
+</h2>
+<div class="stock-container">
+  <div class="d-flex alig-items-center justify-content-between">
+    <mat-form-field class="example-form-field">
+      <mat-label>{{ "stock.search-label" | transloco }}</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="{{ 'stock.search-place-holder' | transloco }}"
+        [(ngModel)]="searchValue"
+      />
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="searchResources()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="createStockElement()">
+      {{ "stock.add-new" | transloco }}
+    </button>
+  </div>
+  @for(resource of filteredStock; track resource) {
+  <app-stock-card
+    [stockResource]="resource"
+    (deleteEvent)="deleteResource(resource)"
+    (updateEvent)="updateResource($event)"
+  ></app-stock-card>
+  } @empty {
+  <div style="font-size: medium">
+    <b>{{ "stock.no-data" | transloco }}</b>
+  </div>
+  }
+</div>

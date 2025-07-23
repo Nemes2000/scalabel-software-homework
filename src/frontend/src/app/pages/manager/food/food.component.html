@@ -1,0 +1,39 @@
+<h2>
+  <b>{{ "food.title" | transloco }}</b>
+</h2>
+<div class="food-container">
+  <div class="d-flex alig-items-center justify-content-between">
+    <mat-form-field class="example-form-field">
+      <mat-label>{{ "food.search-label" | transloco }}</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="{{ 'food.search-place-holder' | transloco }}"
+        [(ngModel)]="searchValue"
+      />
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="searchFood()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="createFood()">
+      {{ "food.add-new" | transloco }}
+    </button>
+  </div>
+  @for(food of filteredFoods; track food) {
+  <app-food-card
+    [food]="food"
+    (deleteEvent)="deleteFood(food)"
+    (updateEvent)="updateFood($event)"
+    (saveImageEvent)="saveImage($event)"
+  ></app-food-card>
+  } @empty {
+  <div style="font-size: medium">
+    <b>{{ "food.no-data" | transloco }}</b>
+  </div>
+  }
+</div>

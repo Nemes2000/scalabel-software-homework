@@ -1,0 +1,38 @@
+<h2>
+  <b>{{ "employee.title" | transloco }}</b>
+</h2>
+<div class="employee-container">
+  <div class="d-flex alig-items-center justify-content-between">
+    <mat-form-field class="example-form-field">
+      <mat-label>{{ "employee.search-label" | transloco }}</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="{{ 'employee.search-place-holder' | transloco }}"
+        [(ngModel)]="searchValue"
+      />
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="searchEmployees()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="addNewEmployee()">
+      {{ "employee.add-new" | transloco }}
+    </button>
+  </div>
+  @for(employee of filteredEmployees; track employee){
+  <app-employee-info-card
+    [employee]="employee"
+    (deleteEvent)="deleteEmployee(employee)"
+    (saveEvent)="saveHourlyWage($event, employee)"
+  ></app-employee-info-card>
+  } @empty {
+  <div style="font-size: medium">
+    <b>{{ "employee.no-data" | transloco }}</b>
+  </div>
+  }
+</div>

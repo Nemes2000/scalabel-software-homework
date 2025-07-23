@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  stock-service:
+    image: stock-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stock-service
+    restart: always
+    networks:
+      - stock-db-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5002
+    depends_on:
+      - stock-db-service
+    ports:
+      - 5002:5002
+
+  stock-db-service:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: stock-db
+    restart: always
+    environment:
+      SA_PASSWORD: "YourPassword1234"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+    networks:
+      - stock-db-network
+    ports:
+      - 1433:1433
+
+networks:
+  stock-db-network:
+    driver: bridge

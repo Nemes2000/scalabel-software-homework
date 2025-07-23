@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>
+  <b>{{ "new-dialog.title" | transloco }}</b>
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="d-flex flex-column">
+    <mat-form-field>
+      <mat-label>{{ "new-dialog.name-label" | transloco }}</mat-label>
+      <input matInput formControlName="resource" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ "new-dialog.unit-label" | transloco }}</mat-label>
+      <mat-select formControlName="selectedUnit">
+        @for (unit of units; track unit) {
+        <mat-option [value]="unit">{{
+          "stock.unit-type." + unit | transloco
+        }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">
+    {{ "new-dialog.cancel" | transloco }}
+  </button>
+  <button
+    mat-button
+    color="primary"
+    [mat-dialog-close]="{
+      resource: form.value.resource,
+      unit: form.value.selectedUnit
+    }"
+    cdkFocusInitial
+    [disabled]="!form.valid"
+  >
+    {{ "new-dialog.create" | transloco }}
+  </button>
+</mat-dialog-actions>

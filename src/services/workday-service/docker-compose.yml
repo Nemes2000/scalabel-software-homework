@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  workdayservice:
+    image: ${DOCKER_REGISTRY-}workdayservice
+    build:
+      context: workdayservice
+      dockerfile: Dockerfile
+    depends_on:
+      - workday-db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=5004
+    ports:
+      - 5004:5004
+    networks:
+      - backend-network
+    restart: always
+    
+  workday-db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    environment:
+      SA_PASSWORD: "YourPassword1234"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
