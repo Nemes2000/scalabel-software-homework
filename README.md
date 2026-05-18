@@ -1,4 +1,4 @@
-# Scalable softwares - Great homework
+# Scalable softwares - A major homework
 
 ## About the project
 
