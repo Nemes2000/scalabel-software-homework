@@ -2,135 +2,135 @@
 
 ## About the project
 
-This homework assignment is based on another homework assignment that four of us completed. I completed the project in the frontend folder shown here on my own. In the current homework assignment, I broke down the completed backend software into microservices.
+This assignment is based on another assignment that the four of us completed. I developed the part of the project contained in the **frontend** folder shown here on my own. In this assignment, I broke down the existing backend software into **microservices**.
 
-## Overview of the original software (in this homework only the "Dolgozói alkalmazás funkciói" functions are available)
+## Overview of the original software (in this homework only the "Staff App Features" functions are available)
 
-A szoftver célja egy étterem adminisztrációjának digitalizációja.
-Ennek során a következő elemek kerülnek lefejlesztésre
+The purpose of the software is to digitize restaurant administration.
+The following features will be developed:
 
-- asztal nyilvántartás
-- foglalás
-- alapanyag nyilvántartás
-- rendelés
-- számlázás
-- visszajelzés
-- hűségpont és kupon
-- munkabeosztás
-- borravaló
+- table management
+- reservations
+- inventory management
+- ordering
+- billing
+- feedback
+- loyalty points and coupons
+- staff scheduling
+- tips
 
-Ezek a következőknek lesznek elérhető
+These features will be available to
 
 - admin (manager)
-- pincérek
-- konyhai dolgozók
-- ügyfelek
+- waitstaff
+- kitchen staff
+- customers
 
-Ezeket a következő technológiákkal kerülnek megvalósításra
+These will be implemented using the following technologies
 
-- Adatbázis: MSSQL
+- Database: MSSQL
 - Backend: ASP.NET C#
 - Frontend
-  - Dolgozók: Angular
-  - Ügyfelek: Ionic Angular
+  - Staff: Angular
+  - Customers: Ionic Angular
 
-## Felhasználó menedzsment
+## User Management
 
-Ügyfél oldalon:
+Customer Portal:
 
-- bejelentkezhetnek, illetve regisztrálhatnak a vásárlók (név, email, jelszó)
+- Customers can log in or register (name, email, password)
 
-Dolgozói oldalon:
+Staff Portal:
 
-- admin
-  - eleve hozzá lesz adva az adatbázishoz, 1 darab
-  - létre tud hozni dolgozói fiókokat, amik random generált jelszóval rendelkeznek (létrehozás után megjelenik, utána nem megtekinthető)
-- munkavállalók
-  - bejelentkeznek előre generált jelszóval, amit utána kötelezően megváltoztatnak az első belépéskor
+- Admin
+  - Pre-added to the database (1 account)
+  - Can create employee accounts with randomly generated passwords (displayed upon creation, then no longer visible)
+- Employees
+  - Log in with a pre-generated password, which they are required to change upon their first login
 
-## Vásárlói alkalmazás funkciói
+## Customer App Features
 
-- bejelentkezés, regisztráció
-- profil:
-  - név, email, jelszó, cím, telefonszám, ebből módosíthatók: cím, telefonszám
-- főoldal/ételek:
-  - elérhető ételek (név, kép, ár),
-  - kosárba lehet helyezni (mennyiség a kosárban állítható, kosárba helyezéskor alapértelmezetten 1 kerül felvételre)
-- kuponok:
-  - összegyűjtött pontok láthatók, listában az elérhető kuponok
-  - kupon kosárba helyezhető
-  - kosárba helyezéskor levonódik a pontokból a kupon ára (utólag ez visszavonható a kosáron keresztül a kupon törlésével)
-  - egyes kuponok csak bizonyos vásárlási összeg fölött alkalmazhatóak
-  - a kuponok vagy százalékos vagy adott összegű kedvezményt adnak
-- kosár:
-  - kosárba helyezett termékek egy lisában
-  - termékek mennyiségei változtathatóak (ha 0-ra állítjuk, akkor kikerül a kosárból)
-  - rendelés gomb megnyomásakor felajánlja az alapértelmezett címet (ami a profilban be van állítva), de megadható másik cím egy adott rendeléshez, ez nem kerül mentésre,
-  - telefonszám ugyanúgy, mint a cím
-  - cím és telefonszám megadása után leadható a rendelés, ezt követően átnavigál az alkalmazás a rendelések nézetre
-- rendelések:
-  - aktív rendelések felül, ezeknél látszik az állapot
-  - ha elutasításra kerül a rendelés és használt kupont a felhasználó, akkor a hűségpont visszakerül a fiókra
-  - aktív rendelések alatt a korábbi, már befejeződött rendelések láthatók
-  - borravaló:
-    - 4 opció: nincs, 5%, 10%, 15%
-  - rendelés időpontja
-  - házhoz megy
-  - már kész rendeléseknél: generált számla (pdf)
-- fizetés (nem nézet, nem a szoftver része):
-  - applikáción keresztül történő rendelés esetén a futárnál (utánvétellel)
-  - étteremben a pincérnél
-- értékelés:
-  - egy felhasználó bármennyi értékelést küldhet
-  - egy értékelés a következőkből áll
-    - 5 csillag (0-5ig lehet küldeni)
-    - szöveges megjegyzést
-    - rendelés módjának kiválasztása (helyben fogyasztás/házhoz szállítás)
+- Login, registration
+- Profile:
+  - Name, email, password, address, phone number; of these, the following can be edited: address, phone number
+- Home page/Food:
+  - Available dishes (name, image, price),
+  - can be added to cart (quantity can be adjusted in the cart; 1 item is added by default when added to cart)
+- coupons:
+  - accumulated points are displayed; available coupons are listed
+  - coupons can be added to cart
+  - the coupon price is deducted from points when added to cart (this can be reversed later by deleting the coupon via the cart)
+  - some coupons are only applicable for purchases above a certain amount
+  - coupons provide either a percentage discount or a fixed amount discount
+- cart:
+  - Products added to the cart are listed in a single list
+  - Product quantities can be adjusted (setting to 0 removes the item from the cart)
+  - When the order button is pressed, the default address (set in the profile) is suggested, but a different address can be entered for a specific order; this is not saved,
+  - Phone number works the same way as the address
+  - After entering the address and phone number, the order can be placed; the app then navigates to the orders view
+- Orders:
+  - Active orders are at the top; their status is displayed
+  - If the order is rejected and the user used a coupon, the loyalty points are returned to the account
+  - Below active orders, previous, completed orders are displayed
+  - Tip:
+    - 4 options: none, 5%, 10%, 15%
+  - Order date
+  - Home delivery
+  - For completed orders: generated invoice (PDF)
+- Payment (not a view, not part of the software):
+  - For orders placed via the app, to the courier (cash on delivery)
+  - at the restaurant, to the server
+- review:
+  - a user can submit any number of reviews
+  - a review consists of the following
+    - 5 stars (ratings from 0 to 5)
+    - text comment
+    - selection of order type (dine-in/delivery)
 
-## Dolgozói alkalmazás funkciói
+## Staff App Features
 
-- be/kijelentkezés
-- pincér nézetei:
-  - foglalások:
-    - foglalás felvétele (asztal, időpont (mettől meddig), létszám, foglaló)
-    - foglalás listázása (naptár nézet)
-    - foglalás törlése
-  - személyes (helybeni) rendelések:
-    - személyes rendelés felvétele (asztal, vásárló, ételek, végösszeg, borravaló)
-    - helybeni rendelés
-- menedzser nézetei:
-  - beérkezett rendelések:
-    - online rendelések elfogadása/elutasítása
-    - állapotok: beérkezett (függőben lévő), elfogadva, elkészítés alatt, kiszállítás alatt, kiszállítva (teljesítve)
-    - elfogadva állapotba kerülés esetén automatikusan generálódik a számla
-  - asztalok:
-    - asztalok felvétele, törlése
-  - készletek:
-    - az étteremben rendelkezésre álló alapanyagok listája (kereséssel)
-      - alapanyag tulajdonságai: név, mennyiség
-    - létrehozása, törlése
-    - darabszámok növelése/csökkentése
-  - dolgozók nézet:
-    - dolgozói fiókok kezelése
-    - új fiókok létrehozása és törlése
-      - szerepkör (konyhás, pincér, ügyfél)
-  - munkabeosztás nézet:
-    - 2 táblázat: pincérek, konyhai dolgozók
-      - tulajdonságok: dolgozó, mettől, meddig
-    - nyitvatartás beállítása a hét napjaira külön-külön
-    - dolgozók hozzárendelése az idősávokhoz
-    - munkaerővel lefedve a nyitás, zárás, elegendő ember (1-2 pincér és konyhai dolgozói van minimum)
-  - ételek nézet
-    - létrehozás, törlés
-    - étel tulajdonságai: név, kép, ár, leírás
-  - visszajelzések
-    - listázás
-    - átlag
-  - kuponok
-    - létrehozás
-      - szabályok (lásd korábbi rész), ár (mennyi hűségpontba kerül)
-    - törlés
-  - borravalók nézet:
-    - borravalók szétosztása algoritmus kiválasztásával
-      - mindenki ugyanannyit (munkaidő arányos)
-      - csak az aktuálisan dolgozók (a munkaidő arányában)
+- Log in/Log out
+- Waiter views:
+  - Reservations:
+    - Create a reservation (table, time (from to), number of guests, deposit)
+    - View reservation list (calendar view)
+    - cancel reservation
+  - walk-in orders:
+    - take walk-in order (table, customer, dishes, total, tip)
+    - walk-in order
+- Manager views:
+  - received orders:
+    - accept/reject online orders
+    - statuses: received (pending), accepted, being prepared, being delivered, delivered (completed)
+    - an invoice is automatically generated when the status changes to "accepted"
+  - tables:
+    - adding and deleting tables
+  - inventory:
+    - list of ingredients available in the restaurant (with search)
+      - Ingredient properties: name, quantity
+    - Create, delete
+    - Increase/decrease quantities
+  - Staff view:
+    - Manage staff accounts
+    - Create and delete new accounts
+      - Role (kitchen staff, server, customer)
+  - Work Schedule View:
+    - 2 tables: waitstaff, kitchen staff
+      - Properties: employee, start time, end time
+    - Set opening hours separately for each day of the week
+    - Assign staff to time slots
+    - Staffing coverage for opening, closing, and sufficient staff (minimum of 1-2 waiters and kitchen staff)
+  - Food view
+    - Create, delete
+    - Food properties: name, image, price, description
+  - Reviews
+    - Listing
+    - Average
+  - Coupons
+    - Create
+      - Rules (see previous section), price (how many loyalty points it costs)
+    - delete
+  - tips view:
+    - distributing tips by selecting an algorithm
+      - everyone gets the same amount (proportional to working hours)
+      - only those currently working (proportional to working hours)
