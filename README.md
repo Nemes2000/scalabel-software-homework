@@ -2,9 +2,9 @@
 
 ## About the project
 
-This assignment is based on another assignment that the four of us completed. I developed the part of the project contained in the **frontend** folder shown here on my own. In this assignment, I broke down the existing backend software into **microservices**.
+This assignment is based on another assignment (which is stored in a private repository) that the four of us completed. I developed the part of the project contained in the **frontend** folder shown here on my own. In this assignment, I broke down the existing backend software into **microservices**.
 
-## Overview of the original software (in this homework only the "Staff App Features" functions are available)
+## Overview of the original software (in this homework only the [Staff App Features](/staff-app-features) functions are available)
 
 The purpose of the software is to digitize restaurant administration.
 The following features will be developed:
